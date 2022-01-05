@@ -1,6 +1,6 @@
 const App = () => {
   return (
-    <div className="App">
+    <div>
       <h1>Hello Wordle!</h1>
     </div>
   );
