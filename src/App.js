@@ -1,5 +1,4 @@
-import { LetterContainer } from "./gameboard/components/LetterContainer";
-
+import {LetterContainer} from './components/gameboard/LetterContainer';
 const App = () => {
   return (
     <>
