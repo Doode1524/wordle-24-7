@@ -1,0 +1,9 @@
+.keyboard-row {
+  display: block;
+}
+
+.keyboard-row {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-column-gap: 5px;
+}

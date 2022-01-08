@@ -12,6 +12,9 @@ code {
     monospace;
 }
 
+.app {
+  
+}
 .app-header {
   display: flex;
   flex-direction: column;
