@@ -1,18 +1,23 @@
 import { useState } from "react";
 import Form from "./components/form";
 import { LetterContainer } from "./components/gameboard/LetterContainer";
-import KeyboardContainer from "./components/keyboard/KeyboardContainer";
 
 const App = () => {
-  const [word, setWord] = useState("");
+  const [word, setWord] = useState(["", "", "", "", "", "", ""]);
+  const [curRow, setCurRow] = useState(0);
+
+  let form = document.getElementById("word-form");
 
   const handleChange = (e) => {
-    setWord(e.target.value.toUpperCase());
+    let newWord = [...word];
+    newWord[curRow] = e.target.value.toUpperCase();
+    setWord(newWord);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(word);
+    setCurRow(curRow + 1);
+    form.reset();
   };
 
   return (
@@ -21,13 +26,13 @@ const App = () => {
       style={{ display: "flex", alignItems: "center", flexDirection: "column" }}
     >
       <h1 className="app-header">WORDLE</h1>
-      <LetterContainer word={word} />
+      <LetterContainer word={word} curRow={curRow} />
       <Form
         handleChange={handleChange}
         word={word}
         handleSubmit={handleSubmit}
+        curRow={curRow}
       />
-      {/* <KeyboardContainer /> */}
     </div>
   );
 };
