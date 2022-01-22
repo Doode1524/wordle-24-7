@@ -9,7 +9,7 @@ const App = () => {
   const handleChange = (e) => {
     setWord(e.target.value.toUpperCase());
   };
-  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(word);
@@ -22,7 +22,11 @@ const App = () => {
     >
       <h1 className="app-header">WORDLE</h1>
       <LetterContainer word={word} />
-      <Form handleChange={handleChange} word={word} handleSubmit={handleSubmit} />
+      <Form
+        handleChange={handleChange}
+        word={word}
+        handleSubmit={handleSubmit}
+      />
       {/* <KeyboardContainer /> */}
     </div>
   );
