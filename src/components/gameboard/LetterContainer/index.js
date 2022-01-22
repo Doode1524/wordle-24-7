@@ -6,7 +6,7 @@ export const LetterContainer = (props) => {
   return (
     <div className="board-container">
       <div className="board">
-        <LetterRow></LetterRow>
+        <LetterRow word={props.word}></LetterRow>
         <LetterRow></LetterRow>
         <LetterRow></LetterRow>
         <LetterRow></LetterRow>

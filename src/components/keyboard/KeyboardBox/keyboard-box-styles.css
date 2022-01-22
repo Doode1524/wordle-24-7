@@ -1,13 +1,12 @@
-.letter-box {
+.keyboard-box {
     display: flex;
     width: 100%;
     height: 155%;
-    min-height: 35px;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
-    line-height: 2rem;
+    font-size: .8rem;
     font-weight: bold;
+    line-height: 2rem;
     vertical-align: middle;
     box-sizing: border-box;
     color: black;
@@ -15,3 +14,5 @@
     user-select: none;
     border: 2px solid #d3d6da
 }
+
+/* TODO: media query here for y axis */
