@@ -17,7 +17,7 @@ const App = () => {
         if (!newWord) {
           fetchWord();
         } else {
-          setCurWord(newWord.toUpperCase());     
+          setCurWord(newWord.toUpperCase());
         }
       });
   };
@@ -25,6 +25,10 @@ const App = () => {
   useEffect(() => {
     fetchWord();
   }, []);
+
+  useEffect(() => {
+    console.log(curWord);
+  }, [word]);
 
   const handleChange = (e) => {
     let newWord = [...word];
@@ -46,19 +50,21 @@ const App = () => {
     let rowBoxes = Array.from(letterRow.children).map((box) => {
       return box;
     });
+    
     enteredWordArr.forEach((letter, i) => {
       rowBoxes.forEach((box) => {
         let letterCheck = wordArr.find((element) => box.innerText === element);
         let boxEle = rowBoxes.find((box) => box.id === `box-${i + 1}`);
-
+      
         if (letter === wordArr[i]) {
-          boxEle.style.backgroundColor = "#6aaa64";
+          boxEle.style.backgroundColor = "#6aaa64"; //green
           boxEle.style.color = "white";
-        } else if (letterCheck) {
-          boxEle.style.backgroundColor = "#c9b458";
+        } else if (letterCheck !== undefined) {
+          letterCheck = undefined;
+          boxEle.style.backgroundColor = "#c9b458"; //yellow
           boxEle.style.color = "white";
         } else {
-          box.style.backgroundColor = "#787c7e";
+          box.style.backgroundColor = "#787c7e"; //black
           box.style.color = "white";
         }
       });
