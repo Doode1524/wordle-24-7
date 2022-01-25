@@ -44,6 +44,10 @@ const App = () => {
   };
 
   const checkWord = (enteredWord) => {
+    // TO RECREATE BUG //
+    // if you enter two of the same letter and one of them is in the 
+    // correct spot, then the block will permanently be yellow 
+    // no matter what letter you enter
     let enteredWordArr = enteredWord.split("");
     let wordArr = curWord.split("");
     let letterRow = document.getElementById(`row-${curRow + 1}`);
