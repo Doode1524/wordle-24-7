@@ -50,6 +50,7 @@ const App = () => {
     // no matter what letter you enter
 
     // found second bug. Same as above, but if you guess the last letter correctly
+    
     let enteredWordArr = enteredWord.split("");
     let wordArr = curWord.split("");
     let letterRow = document.getElementById(`row-${curRow + 1}`);
