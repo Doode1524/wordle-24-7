@@ -22,3 +22,10 @@ input[type="text"] {
   flex-direction: column;
   align-items: center;
 }
+
+.form-btn-container {
+  display: flex;
+  flex-direction: row;
+  width: 350px;
+  justify-content: center;
+}

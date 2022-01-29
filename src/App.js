@@ -48,6 +48,12 @@ const App = () => {
     }
   };
 
+  const handleReset = (event) => {
+    event.preventDefault();
+    window.location.reload();
+    // TODO: this, obviously.
+  };
+
   const checkWord = (enteredWord) => {
     // TO RECREATE BUG //
     // if you enter two of the same letter and one of them is in the
@@ -92,6 +98,7 @@ const App = () => {
       <LetterContainer word={word} curRow={curRow} />
       <Form
         handleChange={handleChange}
+        handleReset={handleReset}
         word={word}
         handleSubmit={handleSubmit}
         curRow={curRow}
