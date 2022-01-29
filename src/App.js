@@ -10,11 +10,6 @@ const App = () => {
 
   let form = document.getElementById("word-form");
 
-  const fetchWord = () => {
-    const randWord = dictionary.solutions[Math.floor(Math.random() * dictionary.solutions.length)];
-    setCurWord(randWord);
-  };
-
   useEffect(() => {
     fetchWord();
   }, []);
@@ -22,6 +17,21 @@ const App = () => {
   useEffect(() => {
     console.log(curWord);
   }, [word]);
+
+  const fetchWord = () => {
+    const randWord =
+      dictionary.solutions[
+        Math.floor(Math.random() * dictionary.solutions.length)
+      ];
+    setCurWord(randWord.toUpperCase());
+  };
+
+  const isValidGuess = (guess) => {
+    return (
+      dictionary.guesses.includes(guess.toLowerCase()) ||
+      dictionary.solutions.includes(guess.toLowerCase())
+    );
+  };
 
   const handleChange = (e) => {
     let newWord = [...word];
@@ -31,9 +41,12 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    checkWord(word[curRow]);
-    setCurRow(curRow + 1);
-    form.reset();
+    console.log(word[curRow]);
+    if (isValidGuess(word[curRow])) {
+      checkWord(word[curRow]);
+      setCurRow(curRow + 1);
+      form.reset();
+    }
   };
 
   const checkWord = (enteredWord) => {
