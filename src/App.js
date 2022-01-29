@@ -41,7 +41,6 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(word[curRow]);
     if (isValidGuess(word[curRow])) {
       checkWord(word[curRow]);
       setCurRow(curRow + 1);
