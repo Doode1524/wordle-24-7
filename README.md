@@ -75,3 +75,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 npm run build
 netlify deploy
 ./build
+
+<!-- fetch("https://random-word-api.herokuapp.com/word?number=10")
+      .then((res) => res.json())
+      .then((data) => {
+        let newWord = data.find((word) => word.length === 5);
+        if (!newWord) {
+          fetchWord();
+        } else {
+          setCurWord(newWord.toUpperCase());
+        }
+      }); -->
