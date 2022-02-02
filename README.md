@@ -86,3 +86,6 @@ netlify deploy
           setCurWord(newWord.toUpperCase());
         }
       }); -->
+
+
+// new solution, not pushing yet
