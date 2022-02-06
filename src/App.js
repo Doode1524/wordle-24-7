@@ -7,16 +7,60 @@ const App = () => {
   const [curWord, setCurWord] = useState("");
   const [word, setWord] = useState(["", "", "", "", "", "", ""]);
   const [curRow, setCurRow] = useState(0);
+  const [user, setUser] = useState({});
 
   let form = document.getElementById("word-form");
 
   useEffect(() => {
     fetchWord();
+    // createUser();
   }, []);
 
   useEffect(() => {
     console.log(curWord);
   }, [word]);
+
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  const checkToken = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("http://localhost:3000/auto_login", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUser(data);
+        })
+        .then(() => {
+          console.log(user);
+        });
+    }
+  };
+
+  // const createUser = () => {
+  //   let obj = {
+  //     username: "JoeyTest6",
+  //     password_digest: "password",
+  //   }
+
+  //   fetch('http://localhost:3000/users', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json'
+  //       },
+  //       body: JSON.stringify(obj)
+  //     })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       localStorage.setItem("token", data.jwt)
+  //     })
+  // }
 
   const fetchWord = () => {
     const randWord =
