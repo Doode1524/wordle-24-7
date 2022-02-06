@@ -1,4 +1,4 @@
-input[type="text"] {
+input[type="text"], input[type="password"] {
   display: flex;
   align-items: center;
   justify-content: center;
