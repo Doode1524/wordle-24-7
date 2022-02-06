@@ -20,7 +20,6 @@ const App = () => {
 
   useEffect(() => {
     fetchWord();
-    // createUser();
   }, []);
 
   useEffect(() => {
@@ -44,26 +43,6 @@ const App = () => {
           setUser(data);
         });
     }
-  };
-
-  const createUser = () => {
-    let obj = {
-      username: "JoeyTest12",
-      password_digest: "password",
-    };
-
-    fetch("http://localhost:3000/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(obj),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        localStorage.setItem("token", data.jwt);
-      });
   };
 
   const fetchWord = () => {
@@ -128,14 +107,13 @@ const App = () => {
 
   const handleLoginFormSubmit = (e) => {
     e.preventDefault();
-    // debugger
     fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify( loginObj ),
+      body: JSON.stringify(loginObj),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -154,10 +132,6 @@ const App = () => {
     event.preventDefault();
     window.location.reload();
     // TODO: this, obviously.
-  };
-
-  const handleNavigate = (path, endpoint) => {
-    navigate(path, { state: { endpoint: endpoint } });
   };
 
   return (
@@ -200,9 +174,7 @@ const App = () => {
           <h2>Please</h2>
           <div>
             <button onClick={() => navigate("login")}>LOGIN</button> or{" "}
-            <button onClick={() => handleNavigate("/signup", "users")}>
-              SIGN UP
-            </button>
+            <button onClick={() => navigate("signup")}>SIGN UP</button>
           </div>
           <h2>to play</h2>
           <Routes>
