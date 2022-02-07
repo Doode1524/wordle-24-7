@@ -35,7 +35,7 @@ const App = () => {
   const checkToken = () => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:3000/auto_login", {
+      fetch("https://shrouded-caverns-91326.herokuapp.com/auto_login", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -87,7 +87,7 @@ const App = () => {
 
   const handleSignUpFormSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/users", {
+    fetch("https://shrouded-caverns-91326.herokuapp.com/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +109,7 @@ const App = () => {
 
   const handleLoginFormSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/login", {
+    fetch("https://shrouded-caverns-91326.herokuapp.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
