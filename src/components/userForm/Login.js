@@ -1,8 +1,9 @@
 import React from 'react';
+import './user-form-styles.css';
 
 export const Login = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={props.handleSubmit} >
           <label htmlFor="username">Username</label>
           <input
             type="text"
@@ -17,7 +18,7 @@ export const Login = (props) => {
             value={props.value.password}
             onChange={props.handleChange}
           />
-          <button type="submit">Submit</button>
+          <button className="login-btn" type="submit">LOG IN</button>
         </form>
       );
 };

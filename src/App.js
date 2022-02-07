@@ -8,6 +8,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { SignUp } from "./components/userForm/SignUp";
 import { Login } from "./components/userForm/Login";
 import { StatsWrapper } from "./components/stats/StatsWrapper";
+import { RequireLogin } from "./components/userForm/RequireLogin";
 
 const App = () => {
   const [curWord, setCurWord] = useState("");
@@ -167,19 +168,8 @@ const App = () => {
           <StatsWrapper user={user.username && user}/>
         </div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <h2>Please</h2>
-          <div>
-            <button onClick={() => navigate("login")}>LOGIN</button> or{" "}
-            <button onClick={() => navigate("signup")}>SIGN UP</button>
-          </div>
-          <h2>to play</h2>
+        <div>
+        <RequireLogin navigate={navigate} />
           <Routes>
             <Route
               exact

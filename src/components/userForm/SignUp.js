@@ -1,4 +1,5 @@
 import React from "react";
+import "./user-form-styles.css";
 
 export const SignUp = (props) => {
   return (
@@ -17,7 +18,7 @@ export const SignUp = (props) => {
         value={props.value.password}
         onChange={props.handleChange}
       />
-      <button type="submit">Submit</button>
+      <button className='login-btn'type="submit">SIGN UP</button>
     </form>
   );
 };
