@@ -1,4 +1,4 @@
-export const checkWord = (enteredWord, curWord, curRow) => {
+export const checkWord = async (enteredWord, curWord, curRow) => {
     let letterRow = document.getElementById(`row-${curRow + 1}`);
     let rowBoxes = Array.from(letterRow.children).map((box) => {
       return box;

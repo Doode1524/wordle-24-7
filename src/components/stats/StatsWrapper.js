@@ -29,7 +29,7 @@ export const StatsWrapper = ({user}) => {
       <UserStats bgc={GREEN}>
         WIN %AGE
         <br />
-        <span className="stat">0</span>
+        <span className="stat">{user.win_percentage}</span>
       </UserStats>
     </div>
   );

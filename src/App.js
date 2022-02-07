@@ -4,7 +4,8 @@ import Form from "./components/form";
 import { LetterContainer } from "./components/gameboard/LetterContainer";
 import { dictionary } from "./dictionary";
 import { checkWord } from "./helpers";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { BASE_URL } from "./helpers/constants";
+import { Route, Routes, useNavigate, useSearchParams } from "react-router-dom";
 import { SignUp } from "./components/userForm/SignUp";
 import { Login } from "./components/userForm/Login";
 import { StatsWrapper } from "./components/stats/StatsWrapper";
@@ -19,6 +20,14 @@ const App = () => {
   const navigate = useNavigate();
 
   let form = document.getElementById("word-form");
+
+  // const getWinPercentage = () => {
+  //   let gamesPlayed = user.wins + user.losses
+  //   if (gamesPlayed > 0 ){
+  //     let winPercentage = (user.wins / (user.wins + user.losses)) * 100;
+  //     return winPercentage.toFixed(0);
+  //   }
+  // };
 
   useEffect(() => {
     fetchWord();
@@ -35,7 +44,7 @@ const App = () => {
   const checkToken = () => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("https://shrouded-caverns-91326.herokuapp.com/auto_login", {
+      fetch(`${BASE_URL}/auto_login`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -68,13 +77,64 @@ const App = () => {
     setWord(newWord);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (isValidGuess(word[curRow])) {
       setCurRow(curRow + 1);
-      checkWord(word[curRow], curWord, curRow);
+      await checkWord(word[curRow], curWord, curRow);
+      if (word[curRow] === curWord) {
+        handleUserWin(user);
+      } else if (curRow === 5) {
+        handleUserLose(user);
+      }
       form.reset();
     }
+  };
+
+  const handleUserWin = (user) => {
+    let checkBestStreak =
+      user.best_streak <= user.current_streak
+        ? user.best_streak + 1
+        : user.best_streak;
+
+    let newObj = {
+      ...user,
+      wins: user.wins + 1,
+      current_streak: user.current_streak + 1,
+      best_streak: checkBestStreak,
+      // win_percentage: (((user.wins + 1) / (user.wins + user.losses)) * 100).toFixed(0)
+    };
+
+    setUser(newObj);
+
+    fetch(`${BASE_URL}/users/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(newObj),
+    }).then((res) => res.json());
+  };
+
+  const handleUserLose = (user) => {
+    let newObj = {
+      ...user,
+      losses: user.losses + 1,
+      current_streak: 0,
+      // win_percentage: (user.wins / (user.wins + user.losses + 1) * 100).toFixed(0)
+    };
+
+    setUser(newObj);
+
+    fetch(`${BASE_URL}/users/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(newObj),
+    });
   };
 
   const handleUserFormChange = (e) => {
@@ -87,7 +147,7 @@ const App = () => {
 
   const handleSignUpFormSubmit = (e) => {
     e.preventDefault();
-    fetch("https://shrouded-caverns-91326.herokuapp.com/users", {
+    fetch(`${BASE_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +169,7 @@ const App = () => {
 
   const handleLoginFormSubmit = (e) => {
     e.preventDefault();
-    fetch("https://shrouded-caverns-91326.herokuapp.com/login", {
+    fetch(`${BASE_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -165,11 +225,11 @@ const App = () => {
             handleSubmit={handleSubmit}
             curRow={curRow}
           />
-          <StatsWrapper user={user.username && user}/>
+          <StatsWrapper user={user.username && user} />
         </div>
       ) : (
         <div>
-        <RequireLogin navigate={navigate} />
+          <RequireLogin navigate={navigate} />
           <Routes>
             <Route
               exact
