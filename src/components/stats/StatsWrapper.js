@@ -3,7 +3,7 @@ import { UserStats } from "./UserStats";
 import { GRAY, GREEN, YELLOW } from "../../helpers/constants";
 import "./stats.css";
 
-export const StatsWrapper = ({user}) => {
+export const StatsWrapper = ({ user }) => {
   return (
     <div className="stats-wrapper">
       <UserStats bgc={GREEN}>
@@ -27,9 +27,13 @@ export const StatsWrapper = ({user}) => {
         <span className="stat">{user.losses}</span>
       </UserStats>
       <UserStats bgc={GREEN}>
-        WIN %AGE
+        WIN PERCENT
         <br />
-        <span className="stat">{user.win_percentage}</span>
+        <span className="stat">
+          {user.wins + user.losses > 0
+            ? ((user.wins / (user.wins + user.losses)) * 100).toFixed(0)
+            : 0}
+        </span>
       </UserStats>
     </div>
   );
