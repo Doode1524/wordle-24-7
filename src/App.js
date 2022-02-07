@@ -10,6 +10,7 @@ import { SignUp } from "./components/userForm/SignUp";
 import { Login } from "./components/userForm/Login";
 import { StatsWrapper } from "./components/stats/StatsWrapper";
 import { RequireLogin } from "./components/userForm/RequireLogin";
+import { Modal } from "./components/modal/Modal";
 
 const App = () => {
   const [curWord, setCurWord] = useState("");
@@ -17,9 +18,20 @@ const App = () => {
   const [curRow, setCurRow] = useState(0);
   const [user, setUser] = useState({});
   const [loginObj, setLoginObj] = useState({ username: "", password: "" });
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
+  const [isLoss, setIsLoss] = useState(false);
+  const [isWin, setIsWin] = useState(false);
   const navigate = useNavigate();
 
   let form = document.getElementById("word-form");
+  const loseTitle = "You Lose :(";
+  const loseMsg = `The correct word was ${curWord}`;
+  const warningTitle = "WARNING!!!";
+  const warningMsg = "You are in the middle of a game. Resetting the word now will result in a loss. Are you sure you want to reset?";
+  const winTitle = "You Win!";
+  const winMsg = "Keep playing and climb the leaderboard!";
 
   // const getWinPercentage = () => {
   //   let gamesPlayed = user.wins + user.losses
@@ -114,7 +126,14 @@ const App = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(newObj),
-    }).then((res) => res.json());
+    })
+    .then((res) => res.json())
+    .then(() => {
+      setIsWin(true);
+      setModalTitle(winTitle);
+      setModalMessage(winMsg);
+      setShowModal(true);
+    });
   };
 
   const handleUserLose = (user) => {
@@ -134,6 +153,11 @@ const App = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       body: JSON.stringify(newObj),
+    }).then(() => {
+      setIsLoss(true);
+      setModalTitle(loseTitle);
+      setModalMessage(loseMsg);
+      setShowModal(true);
     });
   };
 
@@ -190,11 +214,32 @@ const App = () => {
       });
   };
 
-  const handleReset = (event) => {
+  const handleResetClick = (event) => {
     event.preventDefault();
-    window.location.reload();
+    if (isLoss) {
+      window.location.reload()
+    }
+    if (isWin) {
+      window.location.reload()
+    }
+    if (curRow <= 5) {
+      setModalTitle(warningTitle);
+      setModalMessage(warningMsg);
+      setShowModal(true);
+    }
     // TODO: this, obviously.
   };
+
+  const handleResetConfirm = () => {
+    if (isWin && curRow <= 5) {
+      window.location.reload()
+    } else if (curRow <= 5) {
+      handleUserLose(user);
+      window.location.reload();
+    }
+    window.location.reload();
+    // TODO: this too, obviously.
+  }
 
   return (
     <div
@@ -216,11 +261,20 @@ const App = () => {
         ) : null}
       </h1>
       <LetterContainer word={word} curRow={curRow} />
+      <Modal
+        title={modalTitle}
+        message={modalMessage}
+        showModal={showModal}
+        onClose={() => {
+          setShowModal(false)
+        }}
+        onConfirm={handleResetConfirm}
+      />
       {user.username ? (
         <div>
           <Form
             handleChange={handleChange}
-            handleReset={handleReset}
+            handleReset={handleResetClick}
             word={word}
             handleSubmit={handleSubmit}
             curRow={curRow}

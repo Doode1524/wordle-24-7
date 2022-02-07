@@ -1,0 +1,45 @@
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0; 
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #d3d6da;
+}
+
+.modal-content {
+    width: 350px;
+    background-color: #fff;
+    border: 3px solid #d3d6da;
+    text-align: center;  
+}
+
+.modal-header, .modal-footer {
+    padding: 10px;
+}
+
+.modal-title {
+    margin: 0;
+}
+
+.modal-body {
+    padding: 10px;
+    border-top: 1px solid #d3d6da;
+    border-bottom: 1px solid #d3d6da;
+}
+
+.button {
+    font-weight: 400;
+    font-size: large;
+    cursor: pointer;
+    height: 50px;
+    width: 120px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
