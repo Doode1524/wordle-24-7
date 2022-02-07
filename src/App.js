@@ -7,6 +7,7 @@ import { checkWord } from "./helpers";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { SignUp } from "./components/userForm/SignUp";
 import { Login } from "./components/userForm/Login";
+import { StatsWrapper } from "./components/stats/StatsWrapper";
 
 const App = () => {
   const [curWord, setCurWord] = useState("");
@@ -97,10 +98,10 @@ const App = () => {
       .then((data) => {
         if (data.jwt !== undefined) {
           localStorage.setItem("token", data.jwt);
-          setUser(loginObj);
+          setUser(data.user);
           navigate("/");
         } else {
-          navigate("/login");
+          navigate("/signup");
         }
       });
   };
@@ -120,7 +121,7 @@ const App = () => {
         console.log(data, "data");
         if (data.jwt !== undefined) {
           localStorage.setItem("token", data.jwt);
-          setUser(loginObj);
+          setUser(data.user);
           navigate("/");
         } else {
           navigate("/login");
@@ -140,15 +141,16 @@ const App = () => {
       style={{ display: "flex", alignItems: "center", flexDirection: "column" }}
     >
       <h1 className="app-header">
-        WORDLE{" "}
+        HELLO-WORDLE{" "}
         {user.username ? (
           <button
+            className="logout-btn"
             onClick={() => {
               localStorage.removeItem("token");
               setUser({});
             }}
           >
-            Log Out
+            LOGOUT {user.username}
           </button>
         ) : null}
       </h1>
@@ -162,6 +164,7 @@ const App = () => {
             handleSubmit={handleSubmit}
             curRow={curRow}
           />
+          <StatsWrapper user={user.username && user}/>
         </div>
       ) : (
         <div
