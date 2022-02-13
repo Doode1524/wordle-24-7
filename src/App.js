@@ -203,7 +203,6 @@ const App = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "data");
         if (data.jwt !== undefined) {
           localStorage.setItem("token", data.jwt);
           setUser(data.user);
